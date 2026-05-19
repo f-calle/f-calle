@@ -1,10 +1,11 @@
 <h1 align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=28&pause=1200&color=89B4FA&center=true&vCenter=true&width=600&lines=hi%2C+i'm+fernando.;analytics+engineer.;making+data+make+sense." alt="typing"/>
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=28&pause=1200&color=89B4FA&center=true&vCenter=true&width=600&lines=hi%2C+I'm+Fernando.;analytics+engineer+%2B+AI+tinkerer.;where+SQL+meets+LLMs." alt="typing"/>
 </h1>
 
 <p align="center">
-  somewhere between sql, snowflake, and a terminal full of catppuccin.<br/>
-  i build the quiet things finance and ops rely on every morning.
+  analytics engineer with one foot firmly in the AI side. my day job is turning raw operational data into models that hold up under scrutiny: clean grain, clear lineage, the boring infrastructure that lets every team across the company move faster.
+  <br/><br/>
+  the other foot lives in llms, embeddings, semantic layers, and agentic workflows. shipping cortex analyst views so anyone can query in plain english, wiring claude code into deep parts of the dev loop, embedding tickets for smarter routing, building n8n pipelines that write their own reports. the goal: turn "i wonder if" into a real answer before the question goes stale.
 </p>
 
 <p align="center">
@@ -15,16 +16,20 @@
 <br/>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=f-calle&show_icons=true&theme=catppuccin_mocha&hide_border=true&count_private=true&include_all_commits=true" height="180"/>
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=f-calle&theme=catppuccin_mocha&hide_border=true" height="180"/>
+  <img src="https://github-readme-stats.vercel.app/api?username=f-calle&show_icons=true&theme=catppuccin_mocha&hide_border=true&count_private=true&include_all_commits=true&show=reviews,prs_merged,prs_merged_percentage&rank_icon=github" height="200"/>
+  <img src="https://streak-stats.demolab.com?user=f-calle&theme=catppuccin&hide_border=true" height="200"/>
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=f-calle&layout=compact&theme=catppuccin_mocha&hide_border=true&langs_count=6" height="160"/>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=f-calle&layout=compact&theme=catppuccin_mocha&hide_border=true&langs_count=8" height="170"/>
 </p>
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=f-calle&theme=github-compact&bg_color=1e1e2e&color=cdd6f4&line=89b4fa&point=f5c2e7&hide_border=true&area=true" alt="activity"/>
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=f-calle&theme=react-dark&hide_border=true&area=true&custom_title=commit%20activity" alt="activity"/>
+</p>
+
+<p align="center">
+  <img src="https://github-profile-trophy.vercel.app/?username=f-calle&theme=onedark&no-frame=true&no-bg=true&column=7&margin-w=10" alt="trophies"/>
 </p>
 
 <hr/>
