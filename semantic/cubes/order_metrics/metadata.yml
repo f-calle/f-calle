@@ -1,0 +1,28 @@
+name: order_metrics
+base_object: orders
+measures:
+  - name: net_revenue
+    expression: SUM(CASE WHEN status = 'completed' THEN amount ELSE 0 END)
+    type: DOUBLE
+  - name: gross_revenue
+    expression: SUM(amount)
+    type: DOUBLE
+  - name: order_count
+    expression: COUNT(*)
+    type: BIGINT
+dimensions:
+  - name: status
+    expression: status
+    type: VARCHAR
+  - name: customer_id
+    expression: customer_id
+    type: INTEGER
+time_dimensions:
+  - name: order_date
+    expression: order_date
+    type: DATE
+properties:
+  description: >-
+    Governed order metrics. net_revenue is THE revenue definition for
+    Adilade: completed orders only, in USD. gross_revenue includes pending
+    and returned orders and is for reconciliation, not reporting.

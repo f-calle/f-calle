@@ -1,0 +1,38 @@
+name: orders
+properties:
+  description: >-
+    One row per customer order. amount is USD. status is one of: completed,
+    pending, returned. Revenue metrics must use the governed definitions in
+    the order_metrics cube (net revenue counts completed orders only).
+columns:
+  - name: id
+    type: INTEGER
+    is_calculated: false
+    not_null: true
+    is_primary_key: true
+    properties: {}
+  - name: customer_id
+    type: INTEGER
+    is_calculated: false
+    not_null: false
+    properties: {}
+  - name: order_date
+    type: DATE
+    is_calculated: false
+    not_null: true
+    properties:
+      description: Calendar date the order was placed.
+  - name: status
+    type: VARCHAR
+    is_calculated: false
+    not_null: true
+    properties:
+      description: "Order lifecycle state. One of: completed, pending, returned."
+  - name: amount
+    type: DOUBLE
+    is_calculated: false
+    not_null: true
+    properties:
+      description: Order value in USD.
+primary_key: id
+cached: false
