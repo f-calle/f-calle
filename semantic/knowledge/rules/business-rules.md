@@ -1,3 +1,4 @@
+<!-- Adapted from WrenAI examples/v5-jaffle (Apache-2.0); modified for Adilade — see /NOTICE. -->
 # Business rules
 
 - "Revenue" ALWAYS means **net revenue**: `SUM(amount)` over orders with

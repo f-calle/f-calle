@@ -1,4 +1,5 @@
 ---
+# Adapted from WrenAI examples/v5-jaffle (Apache-2.0); modified for Adilade — see /NOTICE.
 nl: What was our total revenue by month?
 sql: |
   SELECT DATE_TRUNC('month', order_date) AS month,

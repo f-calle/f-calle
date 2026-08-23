@@ -1,3 +1,4 @@
+# Adapted from WrenAI examples/v5-jaffle (Apache-2.0); modified for Adilade — see /NOTICE.
 name: order_facts
 statement: |
   SELECT o.id AS order_id, o.order_date, o.status, o.amount,

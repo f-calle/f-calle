@@ -1,3 +1,4 @@
+# Adapted from WrenAI examples/v5-jaffle (Apache-2.0); modified for Adilade — see /NOTICE.
 name: orders
 properties:
   description: >-
