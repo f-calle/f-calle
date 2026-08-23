@@ -21,9 +21,10 @@
 #   WAREHOUSE_DATABASE_URL=postgres://user:pass@host:port/db scripts/e2e_hardcoded.sh
 set -euo pipefail
 
-# readlink -f: the script is also invoked through the /usr/local/bin/adilade-e2e
-# symlink inside the engine image, so resolve to the real path first.
-REPO_ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+# Resolve symlinks via python (portable; readlink -f is missing on older
+# macOS) so the repo root is found even when invoked through a link.
+SCRIPT_PATH="$(python3 -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "${BASH_SOURCE[0]}")"
+REPO_ROOT="$(cd "$(dirname "$SCRIPT_PATH")/.." && pwd)"
 SEMANTIC_DIR="${SEMANTIC_DIR:-$REPO_ROOT/semantic}"
 : "${WAREHOUSE_DATABASE_URL:?WAREHOUSE_DATABASE_URL is required (postgres://user:pass@host:port/db)}"
 

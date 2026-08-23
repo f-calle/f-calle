@@ -11,8 +11,10 @@ mkdir -p "$WREN_HOME"
 # Grounding is non-negotiable: reject SQL referencing tables outside the MDL.
 printf '{"strict_mode": true}\n' > "$WREN_HOME/config.json"
 
+# --profile emits JSON (parseable regardless of the mktemp suffix) with $
+# escaped for the engine's serve-time secret expansion.
 profile_file="$(mktemp)"
-python3 /app/engine/connection_from_url.py "$WAREHOUSE_DATABASE_URL" --yaml > "$profile_file"
+python3 /app/engine/connection_from_url.py "$WAREHOUSE_DATABASE_URL" --profile > "$profile_file"
 # --no-validate: the warehouse may still be booting; fail at query time instead.
 wren profile add warehouse --from-file "$profile_file" --activate --no-validate
 rm -f "$profile_file"

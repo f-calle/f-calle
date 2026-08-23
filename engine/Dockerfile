@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends postgresql-clie
 
 # mcp is pinned <2: wrenai 0.13.3 declares mcp[cli]>=1.19 with no upper
 # bound, but mcp 2.0.0 removed mcp.server.fastmcp and breaks `wren serve`.
-RUN pip install --no-cache-dir "wrenai[postgres,mcp]==0.13.3" "mcp[cli]>=1.19,<2"
+# wren-core-py is pinned to the version audited alongside wrenai 0.13.3.
+RUN pip install --no-cache-dir "wrenai[postgres,mcp]==0.13.3" "wren-core-py==0.7.5" "mcp[cli]>=1.19,<2"
 
 ENV WREN_HOME=/app/.wren \
     WREN_PROJECT_HOME=/app/semantic \
@@ -25,8 +26,11 @@ COPY engine/connection_from_url.py engine/entrypoint.sh /app/engine/
 COPY scripts/e2e_hardcoded.sh /app/scripts/e2e_hardcoded.sh
 
 # Fail the build early if the semantic layer doesn't compile.
+# adilade-e2e is a wrapper, not a symlink, so the script's repo-root
+# resolution sees its real path.
 RUN chmod +x /app/engine/entrypoint.sh /app/scripts/e2e_hardcoded.sh \
-    && ln -s /app/scripts/e2e_hardcoded.sh /usr/local/bin/adilade-e2e \
+    && printf '#!/bin/sh\nexec /app/scripts/e2e_hardcoded.sh "$@"\n' > /usr/local/bin/adilade-e2e \
+    && chmod +x /usr/local/bin/adilade-e2e \
     && mkdir -p "$WREN_HOME" \
     && printf '{"strict_mode": true}\n' > "$WREN_HOME/config.json" \
     && cd /app/semantic && wren context validate && wren context build
