@@ -87,7 +87,7 @@ Four layers, all exercised by `scripts/e2e_hardcoded.sh`:
 
 | Gate | Catches | Verified behavior |
 |---|---|---|
-| Policy check (`strict_mode: true`) | tables not in the MDL; any non-SELECT; file/net readers | `SELECT * FROM payments` → `MODEL_NOT_FOUND … phase=SQL_POLICY_CHECK`, before planning |
+| Policy check | any non-SELECT and file/net readers (always enforced, independent of strict mode); tables not in the MDL (`strict_mode: true`, which Adilade enforces everywhere) | `SELECT * FROM payments` → `MODEL_NOT_FOUND … phase=SQL_POLICY_CHECK`, before planning |
 | MDL planning (`dry-plan`) | structurally invalid semantic SQL; shows the fully expanded, grounded SQL | plan printed for review |
 | Warehouse dry-run (`dry-run`, `LIMIT 0`) | unknown columns, type errors — anything the DB itself rejects | `SELECT profit FROM orders` → `column "profit" does not exist … phase=SQL_DRY_RUN` |
 | Cube validation | metrics/dimensions not defined in a cube | `--measures profit_margin` → `Unknown measure` |

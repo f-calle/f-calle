@@ -47,7 +47,7 @@ This starts:
 
 | Service | What it is | Where |
 |---|---|---|
-| `sample-warehouse` | Postgres 16 seeded with a small commerce dataset ([sample-warehouse/seed.sql](./sample-warehouse/seed.sql)) | internal |
+| `sample-warehouse` | Postgres 16 seeded with a small commerce dataset ([sample-warehouse/seed.sql](./sample-warehouse/seed.sql)) | `localhost:5433` (loopback only) |
 | `engine` | The Wren engine serving the governed semantic layer over MCP (strict grounding on) | `127.0.0.1:8080/mcp` (loopback only — the MCP endpoint has no auth) |
 
 Then run the end-to-end proof — the hardcoded question *"What was our total
@@ -66,7 +66,8 @@ PASS: semantic-SQL path == cube path == raw-SQL ground truth (6 months, 3-way ma
 
 ## Quickstart (no Docker)
 
-With python3.11+, `psql`, and a Postgres you can seed:
+With python3.11+ on x86_64 (the engine's native wheels are amd64-only
+outside macOS), `psql`, and a Postgres you can seed:
 
 ```bash
 WAREHOUSE_DATABASE_URL=postgres://user:pass@localhost:5432/adilade_sample \
@@ -119,13 +120,32 @@ anywhere Docker Compose does.
 ## Working with the semantic layer directly
 
 The engine's CLI is fully available for driving Adilade's semantic layer
-by hand (or from your own agent via MCP):
+by hand (or from your own agent via MCP). Setup for hand-driven use —
+`scripts/dev_native.sh` already did all of this if you ran it
+(`source .venv/bin/activate`):
 
 ```bash
-cd semantic
+# Install (exact pins matter: mcp 2.x breaks `wren serve` with wrenai 0.13.3)
+pip install "wrenai[postgres,mcp]==0.13.3" "wren-core-py==0.7.5" "mcp[cli]>=1.19,<2"
+
+# Turn on strict grounding — the engine container does this for you, but
+# a hand-run CLI defaults to strict_mode OFF:
+mkdir -p ~/.wren && printf '{"strict_mode": true}\n' > ~/.wren/config.json
+
+# Against the Docker quickstart's sample warehouse use the host-published
+# port; with your own warehouse use its URL directly:
+export WAREHOUSE_DATABASE_URL=postgres://adilade:adilade_local_dev@localhost:5433/adilade_sample
+
+cd semantic && wren context build   # compile target/mdl.json (gitignored)
+```
+
+Then:
+
+```bash
 wren query --sql 'SELECT status, COUNT(*) FROM orders GROUP BY 1' \
   --connection-file <(python3 ../engine/connection_from_url.py "$WAREHOUSE_DATABASE_URL")
-wren cube query -c order_metrics --measures net_revenue --time-dimension order_date:month ...
+wren cube query -c order_metrics --measures net_revenue --time-dimension order_date:month \
+  --connection-file <(python3 ../engine/connection_from_url.py "$WAREHOUSE_DATABASE_URL")
 wren dry-plan -d postgres --sql '...'   # see the grounded, expanded SQL
 wren serve mcp --transport http         # what the engine container runs
 ```
