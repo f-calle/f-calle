@@ -1,0 +1,25 @@
+# Secrets / local config
+.env
+*.local
+
+# Wren build artifacts and per-machine state
+semantic/target/
+semantic/.wren/
+.wren/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Node (web app, later)
+node_modules/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

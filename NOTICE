@@ -1,0 +1,33 @@
+Adilade
+Copyright 2026 Fernando Calle Tavarez
+
+This product is built on the Wren AI engine ("WrenAI"), an open-source
+project by Canner, Inc.
+https://github.com/Canner/WrenAI
+
+Adilade reuses the following WrenAI components, all licensed under the
+Apache License, Version 2.0 (see LICENSES/wrenai-LICENSE-APACHE-2.0):
+
+  * The Wren engine — the `wrenai` and `wren-core-py` Python packages
+    (sources: `core/wren` and `core/wren-core*` in the WrenAI repository),
+    consumed as pinned, unmodified PyPI dependencies at image build time.
+    This includes the MDL semantic layer, the grounded SQL planning and
+    validation pipeline, the PostgreSQL connector, and the MCP server + CLI.
+  * The semantic-layer project layout and sample project under `semantic/`,
+    adapted from `examples/v5-jaffle` in the WrenAI repository.
+
+Upstream snapshot used for the license audit and the adapted example:
+WrenAI commit f2841bcbdf8daed9cab9bd5d83275bc51c176594.
+
+Only paths that WrenAI licenses under Apache-2.0 (`core/**`, `sdk/**`,
+`skills/**`, `examples/**`, and root files, per WrenAI's LICENSE — a copy is
+kept at LICENSES/wrenai-LICENSE) are reused. No content from WrenAI's
+`docs/**` (CC BY 4.0), no AGPL-licensed material (none exists at the pinned
+commit), and nothing from the legacy WrenAI GenBI application (the
+`legacy/v1` branch) is included in this product.
+
+Trademarks: "Wren", "WrenAI", and the WrenAI logos are trademarks of
+Canner, Inc. and are NOT licensed under Apache-2.0. Adilade is an
+independent project, not affiliated with or endorsed by Canner, Inc.;
+WrenAI is referenced here only to attribute the reused code. No WrenAI
+logos or branding assets are included in this repository.
