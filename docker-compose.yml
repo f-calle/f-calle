@@ -1,0 +1,41 @@
+# Adilade local development stack.
+#   docker compose up --build
+# Services (MVP step 2): the sample warehouse and the Wren engine.
+# The Adilade web app and its app-state database arrive in steps 3–4.
+name: adilade
+
+services:
+  sample-warehouse:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: adilade_sample
+      POSTGRES_USER: adilade
+      POSTGRES_PASSWORD: ${SAMPLE_WAREHOUSE_PASSWORD:-adilade_local_dev}
+    volumes:
+      - ./sample-warehouse/seed.sql:/docker-entrypoint-initdb.d/10-seed.sql:ro
+      - sample-warehouse-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adilade -d adilade_sample"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  engine:
+    build:
+      context: .
+      dockerfile: engine/Dockerfile
+    platform: linux/amd64  # wren-core-py has no linux/arm64 wheels
+    environment:
+      # Defaults to the bundled sample warehouse (picking up
+      # SAMPLE_WAREHOUSE_PASSWORD); set WAREHOUSE_DATABASE_URL in .env to
+      # point at your real Postgres instead.
+      WAREHOUSE_DATABASE_URL: ${WAREHOUSE_DATABASE_URL:-postgres://adilade:${SAMPLE_WAREHOUSE_PASSWORD:-adilade_local_dev}@sample-warehouse:5432/adilade_sample}
+    depends_on:
+      sample-warehouse:
+        condition: service_healthy
+    ports:
+      # The MCP endpoint has no auth of its own — keep it loopback-only.
+      - "127.0.0.1:8080:8080"
+
+volumes:
+  sample-warehouse-data:
