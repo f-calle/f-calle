@@ -1,7 +1,7 @@
 {
   "name": "example-plugin",
   "version": "1.0.0",
-  "depends": ["core"],
+  "depends": [],
   "entities": [],
   "hooks": {
     "deal.onCreate": "./dist/hooks/log-deal.js"

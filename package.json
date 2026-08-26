@@ -8,8 +8,8 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
-    "db:migrate": "tsx scripts/migrate.ts",
-    "db:seed": "tsx scripts/seed.ts"
+    "db:migrate": "set -a && . ./.env && set +a && tsx scripts/migrate.ts",
+    "db:seed": "set -a && . ./.env && set +a && tsx scripts/seed.ts"
   },
   "devDependencies": {
     "@meridian/core": "workspace:*",

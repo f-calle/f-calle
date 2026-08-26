@@ -21,7 +21,7 @@ import type { ActorContext } from "@meridian/core";
 registerEntities(allEntities);
 
 pluginManager.install(
-  { name: "example-plugin", version: "1.0.0", depends: ["core"], hooks: { "deal.onCreate": "./hooks/log-deal.ts" } },
+  { name: "example-plugin", version: "1.0.0", hooks: { "deal.onCreate": "./hooks/log-deal.ts" } },
   examplePluginHooks,
 );
 pluginManager.enable("example-plugin");
